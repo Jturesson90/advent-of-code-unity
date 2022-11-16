@@ -1,0 +1,28 @@
+* {
+    font-size: 16px;
+    -unity-font: url('project://database/Assets/SourceCodePro-Regular.ttf?fileID=12800000&guid=9eeb73ba01eccb04abd53679c96327a3&type=3#SourceCodePro-Regular');
+}
+
+propertylabel {
+    -unity-font-style: bold;
+    color: rgb(68, 138, 255);
+}
+
+.button:hover {
+    color: rgb(153, 255, 153);
+}
+
+.buttons-container {
+    margin-top: 20px;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.button {
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0;
+    margin: 0;
+    padding: 0;
+    color: rgb(0, 153, 0);
+    font-size: 19px;
+}

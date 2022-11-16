@@ -1,0 +1,11 @@
+{
+    "name": "com.jturesson.adventofcode",
+    "version": "0.1.2",
+    "author": {
+        "email": "jturesson90@gmail.com",
+        "name": "Jesper Turesson"
+    },
+    "displayName": "Advent of Code for Unity",
+    "unity": "2022.1",
+    "description": "Read your descriptions and inputs directly in Unity Editor"
+}

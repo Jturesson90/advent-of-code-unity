@@ -1,0 +1,16 @@
+{
+  "name": "JTuresson.AdventOfCode",
+  "rootNamespace": "JTuresson.AdventOfCode",
+  "references": [
+    "GUID:038e62f4817222d4a85b8771c606a081"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

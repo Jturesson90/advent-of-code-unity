@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Packages/com.jturesson.adventofcode.starter/Editor/AdventOfCodeSettingsEditor.uss?fileID=7433441132597879392&amp;guid=124a9182cc75eac46b3bc340dc2d9afa&amp;type=3#AdventOfCodeSettingsEditor" />
+    <ui:VisualElement name="VisualElement" style="flex-direction: column; align-items: flex-start; justify-content: flex-end;">
+        <ui:TextField picking-mode="Ignore" label="Session Id" value="filler text" text="Session Id from adventofcode.com" binding-path="m_Session" password="false" is-delayed="false" name="SessionId" focusable="true" style="-unity-font: url(&apos;project://database/Assets/SourceCodePro-Regular.ttf?fileID=12800000&amp;guid=9eeb73ba01eccb04abd53679c96327a3&amp;type=3#SourceCodePro-Regular&apos;); flex-direction: row; flex-wrap: nowrap; flex-grow: 1;" />
+        <ui:IntegerField label="Year" value="2021" binding-path="m_Year" style="flex-grow: 1; font-size: 18px; -unity-font: none; -unity-font-style: normal;" />
+    </ui:VisualElement>
+    <ui:IMGUIContainer name="ClearCacheContainer" class="button-margin buttons-container" style="justify-content: center; align-items: flex-end;">
+        <ui:Button text="[Clear Cache]" display-tooltip-when-elided="true" name="AdventClearCache" class="button" />
+    </ui:IMGUIContainer>
+</ui:UXML>
