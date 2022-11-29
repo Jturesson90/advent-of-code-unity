@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
-    <Style src="project://database/Packages/com.jturesson.adventofcode.starter/Editor/AdventOfCodeSettingsWindow.uss?fileID=7433441132597879392&amp;guid=e096bc1acf0860c4bbf9faea27e43701&amp;type=3#AdventOfCodeSettingsWindow" />
+    <Style src="project://database/Packages/com.jturesson.adventofcode/Editor/AdventOfCodeSettingsWindow.uss?fileID=7433441132597879392&amp;guid=e096bc1acf0860c4bbf9faea27e43701&amp;type=3#AdventOfCodeSettingsWindow" />
     <ui:VisualElement name="body" style="flex-grow: 1;">
-        <ui:Label text="Advent of code" enable-rich-text="true" name="h1" class="advent-of-code-h1" style="-unity-font: url(&apos;project://database/Assets/SourceCodePro-Regular.ttf?fileID=12800000&amp;guid=9eeb73ba01eccb04abd53679c96327a3&amp;type=3#SourceCodePro-Regular&apos;); text-shadow: 0 0 2.5px rgb(0, 204, 0); -unity-font-style: normal; -unity-font-definition: none;" />
+        <ui:Label tabindex="-1" text="Advent of Code" display-tooltip-when-elided="true" name="Label" class="advent-of-code-h1" style="-unity-text-align: middle-center; color: rgb(0, 204, 0); -unity-font-style: normal; -unity-font-definition: none; -unity-font: url(&apos;project://database/Packages/com.jturesson.adventofcode/Editor/Fonts/SourceCodePro-SemiBold.ttf?fileID=12800000&amp;guid=8bd12d44aa7a7e84ab759c6c5e24539f&amp;type=3#SourceCodePro-SemiBold&apos;); text-shadow: 0 0 2px rgb(0, 204, 0);" />
     </ui:VisualElement>
 </ui:UXML>

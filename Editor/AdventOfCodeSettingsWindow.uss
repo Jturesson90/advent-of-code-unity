@@ -1,21 +1,15 @@
-.custom-label {
-    font-size: 20px;
-    -unity-font-style: bold;
-    color: rgb(68, 138, 255);
-}
-
 #body {
     padding: 8px;
-    -unity-font: resource("SourceCodePro-Regular");
-    background-color: #0f0f23;
+    -unity-font: resource('SourceCodePro-Regular');
+    background-color: rgb(15, 15, 35);
 }
 
 .advent-of-code-h1 {
     color: rgb(0, 204, 0);
     text-shadow: 0 0 5px rgb(0, 204, 0);
-    -unity-font: url('project://database/Packages/com.jturesson.adventofcode.starter/Editor/Fonts/SourceCodePro-Regular.ttf?fileID=12800000&guid=2dfce3c62d108de438f6f8afc64e04d4&type=3#SourceCodePro-Regular');
-    font-size: 20px;
+    -unity-font: url('project://database/Library/unity%20default%20resources?fileID=10102&guid=0000000000000000e000000000000000&type=0#Arial');
+    font-size: var(--unity-metrics-default-font_very_big_size);
     -unity-text-align: middle-center;
-    -unity-font-style: bold;
-    -unity-font-definition: url('project://database/Packages/com.jturesson.adventofcode.starter/Editor/Fonts/SourceCodePro-Regular%20SDF%201.asset?fileID=11400000&guid=b6a4f2a0eefe8c249adcb3eac1a0ca6d&type=2#SourceCodePro-Regular SDF 1');
+    -unity-font-style: normal;
+    -unity-font-definition: none;
 }

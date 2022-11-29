@@ -7,6 +7,17 @@ namespace Editor
         FilePathAttribute.Location.PreferencesFolder)]
     public class AdventOfCodePagination : ScriptableSingleton<AdventOfCodePagination>
     {
-        [SerializeField] public int hej = 2;
+        public enum PaginationStateEnum
+        {
+            ShowDescription,
+            ShowInput,
+            Non
+        }
+
+        public int day;
+
+        public string description;
+        public string input;
+        public PaginationStateEnum paginationState;
     }
 }

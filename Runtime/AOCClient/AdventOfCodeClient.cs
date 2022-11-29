@@ -1,24 +1,25 @@
 using System;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
+using UnityEngine;
 using UnityEngine.Networking;
 
 namespace JTuresson.AdventOfCode.AOCClient
 {
     public class AdventOfCodeClient
     {
-        private readonly IAdventOfCodeCache _cache;
         private readonly IAdventOfCodeSettings _settings;
+        private readonly IAdventOfCodeCache _cache;
 
-        public AdventOfCodeClient(IAdventOfCodeCache cache, IAdventOfCodeSettings settings)
+        public AdventOfCodeClient(IAdventOfCodeSettings settings, IAdventOfCodeCache cache)
         {
-            _cache = cache;
             _settings = settings;
+            _cache = cache;
         }
 
         public async Task<bool> SessionIsValid()
         {
-            var uri = "https://adventofcode.com/2021/day/10/input";
+            const string uri = "https://adventofcode.com/2021/day/10/input";
             using var www = UnityWebRequest.Get(uri);
             www.SetRequestHeader("Cookie", $"session={_settings.Session}");
             var operation = www.SendWebRequest();
@@ -68,6 +69,7 @@ namespace JTuresson.AdventOfCode.AOCClient
         {
             if (_cache.HasDescription(_settings.Year, day))
             {
+                Debug.Log("Got Desc from Cache for day " + day);
                 return _cache.GetDescription(_settings.Year, day);
             }
 
@@ -100,10 +102,11 @@ namespace JTuresson.AdventOfCode.AOCClient
         {
             if (_cache.HasInput(_settings.Year, day))
             {
+                Debug.Log("Got Input from Cache for day " + day);
                 return _cache.GetInput(_settings.Year, day);
             }
 
-            var uri = $"https://adventofcode.com/{_settings.Year}/day/{day}";
+            var uri = $"https://adventofcode.com/{_settings.Year}/day/{day}/input";
             using var www = UnityWebRequest.Get(uri);
             www.SetRequestHeader("Cookie", $"session={_settings.Session}");
             var operation = www.SendWebRequest();

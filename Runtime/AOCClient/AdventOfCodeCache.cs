@@ -32,9 +32,16 @@ namespace JTuresson.AdventOfCode.AOCClient
 
         public bool HasInput(int year, int day)
         {
+            if (cache == null) return false;
+
             var yearCache = cache.ContainsKey(year) ? cache[year] : null;
-            return yearCache != null && yearCache.ContainsKey(day) &&
-                   !yearCache[day].input.Equals(string.Empty);
+            if (yearCache == null) return false;
+            if (!yearCache.ContainsKey(day)) return false;
+            var input = yearCache[day].input;
+            if (input == string.Empty) return false;
+            if (input == null) return false;
+
+            return true;
         }
 
         public void DeleteDay(int year, int day)
@@ -72,9 +79,16 @@ namespace JTuresson.AdventOfCode.AOCClient
 
         public bool HasDescription(int year, int day)
         {
+            if (cache == null) return false;
+
             var yearCache = cache.ContainsKey(year) ? cache[year] : null;
-            return yearCache != null && yearCache.ContainsKey(day) &&
-                   !yearCache[day].description.Equals(string.Empty);
+            if (yearCache == null) return false;
+            if (!yearCache.ContainsKey(day)) return false;
+            var desc = yearCache[day].description;
+            if (desc == string.Empty) return false;
+            if (desc == null) return false;
+
+            return true;
         }
 
         public string GetDescription(int year, int day)

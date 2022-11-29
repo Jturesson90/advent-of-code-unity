@@ -1,5 +1,4 @@
 * {
-    font-size: 16px;
     -unity-font: url('project://database/Assets/SourceCodePro-Regular.ttf?fileID=12800000&guid=9eeb73ba01eccb04abd53679c96327a3&type=3#SourceCodePro-Regular');
 }
 
@@ -13,16 +12,33 @@ propertylabel {
 }
 
 .buttons-container {
-    margin-top: 20px;
+    margin-top: 2px;
+    margin-bottom: 20px;
     align-items: flex-end;
     justify-content: center;
 }
 
-.button {
+#Year {
+    flex-grow: 1;
+}
+
+#SessionId {
+    flex-grow: 1;
+}
+
+.advent-of-code-button {
     background-color: rgba(0, 0, 0, 0);
     border-width: 0;
     margin: 0;
     padding: 0;
     color: rgb(0, 153, 0);
-    font-size: 19px;
+    font-size: var(--unity-metrics-default-font_very_big_size);
+}
+.advent-of-code-button:hover {
+    color: rgb(153, 255, 153);
+}
+
+#ClearCacheContainer {
+    justify-content: center;
+    align-items: flex-end;
 }

@@ -8,11 +8,11 @@ namespace Editor
 {
     public class AdventOfCodeSettingsWindow : EditorWindow
     {
-        [SerializeField] private VisualTreeAsset visualTreeAsset = default;
+        [SerializeField] private VisualTreeAsset visualTreeAsset;
         [SerializeField] private AdventOfCodeSettings settings;
         [SerializeField] private AdventOfCodePagination pagination;
 
-        [MenuItem("Window/JTuresson/Advent of Code Settings")]
+        [MenuItem("Window/Advent of Code/Settings")]
         public static void ShowExample()
         {
             var wnd = GetWindow<AdventOfCodeSettingsWindow>();
@@ -34,6 +34,7 @@ namespace Editor
         private void OnFocus()
         {
             settings = AdventOfCodeSettings.Instance;
+            pagination = AdventOfCodePagination.instance;
             CreateGUI();
         }
 
@@ -46,6 +47,7 @@ namespace Editor
         private void OnAdventOfCodeSettingsExistChanged()
         {
             settings = AdventOfCodeSettings.Instance;
+            pagination = AdventOfCodePagination.instance;
             CreateGUI();
         }
 
@@ -67,7 +69,8 @@ namespace Editor
             else
             {
                 scrollView.Add(new InspectorElement(settings));
-                scrollView.Add(new InspectorElement(pagination));
+                if (pagination)
+                    scrollView.Add(new InspectorElement(pagination));
             }
 
             body.Add(scrollView);

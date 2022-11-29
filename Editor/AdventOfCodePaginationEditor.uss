@@ -2,6 +2,41 @@
 }
 
 #Tabs {
+    flex-direction: column;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-basis: auto;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: stretch;
+}
+#TextContainer{
+    flex: 1 1;
+    flex-direction: column;
+}
+#DescriptionButton {
+    margin: 0 8px;
+}
+#Description {
+    flex: 1;
+}
+#DescriptionInput{
+    font-size: var(--unity-metrics-default-font_big_size);
+}
+.advent-of-code-button {
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0;
+    margin: 0;
+    padding: 0;
+    font-size: var(--unity-metrics-default-font_very_big_size);
+    color: rgb(0, 153, 0);
+}
+
+.advent-of-code-button:hover {
+    color: rgb(153, 255, 153);
+}
+
+#buttons {
     flex-direction: row;
     flex-grow: 0;
     flex-wrap: nowrap;

@@ -3,7 +3,7 @@
 // Forum & Issues: https://github.com/zzzprojects/html-agility-pack
 // License: https://github.com/zzzprojects/html-agility-pack/blob/master/LICENSE
 // More projects: http://www.zzzprojects.com/
-// Copyright © ZZZ Projects Inc. 2014 - 2017. All rights reserved.
+// Copyright ï¿½ ZZZ Projects Inc. 2014 - 2017. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -64,7 +64,9 @@ namespace HtmlAgilityPack
         private static int _maxDepthLevel = int.MaxValue;
 
         private int _c;
+#pragma warning disable CS0618
         private Crc32 _crc32;
+#pragma warning restore CS0618
         private HtmlAttribute _currentattribute;
         private HtmlNode _currentnode;
         private Encoding _declaredencoding;
@@ -1316,7 +1318,9 @@ namespace HtmlAgilityPack
             int lastquote = 0;
             if (OptionComputeChecksum)
             {
+#pragma warning disable CS0618
                 _crc32 = new Crc32();
+#pragma warning restore CS0618
             }
 
             Lastnodes = new Dictionary<string, HtmlNode>();
