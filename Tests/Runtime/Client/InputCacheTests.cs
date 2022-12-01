@@ -1,4 +1,4 @@
-using AdventOfCode;
+using JTuresson.AdventOfCode.AOCClient;
 using NUnit.Framework;
 using UnityEngine;
 
