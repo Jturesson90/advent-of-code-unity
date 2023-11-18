@@ -1,27 +1,16 @@
 using System;
 using System.Threading.Tasks;
-using HtmlAgilityPack;
-using UnityEngine;
 using UnityEngine.Networking;
 
 namespace JTuresson.AdventOfCode.AOCClient
 {
     public class AdventOfCodeClient
     {
-        private readonly IAdventOfCodeSettings _settings;
-        private readonly IAdventOfCodeCache _cache;
-
-        public AdventOfCodeClient(IAdventOfCodeSettings settings, IAdventOfCodeCache cache)
-        {
-            _settings = settings;
-            _cache = cache;
-        }
-
-        public async Task<bool> SessionIsValid()
+        public async Task<bool> SessionIsValid(string session)
         {
             const string uri = "https://adventofcode.com/2021/day/10/input";
             using var www = UnityWebRequest.Get(uri);
-            www.SetRequestHeader("Cookie", $"session={_settings.Session}");
+            www.SetRequestHeader("Cookie", $"session={session}");
             var operation = www.SendWebRequest();
             while (!operation.isDone)
                 await Task.Yield();
@@ -39,11 +28,11 @@ namespace JTuresson.AdventOfCode.AOCClient
             }
         }
 
-        public async Task<bool> CanGetDay(int day)
+        public async Task<bool> CanGetDay(string session, int year, int day)
         {
-            var uri = $"https://adventofcode.com/{_settings.Year}/day/{day}/input";
+            var uri = $"https://adventofcode.com/{year}/day/{day}/input";
             using var www = UnityWebRequest.Get(uri);
-            www.SetRequestHeader("Cookie", $"session={_settings.Session}");
+            www.SetRequestHeader("Cookie", $"session={session}");
             var operation = www.SendWebRequest();
             while (!operation.isDone)
                 await Task.Yield();
@@ -64,16 +53,16 @@ namespace JTuresson.AdventOfCode.AOCClient
                     throw new ArgumentOutOfRangeException();
             }
         }
-
-        public async Task<string> LoadDescription(int day)
+/*
+        public async Task<string> LoadDescription(int year, int day)
         {
-            if (_cache.HasDescription(_settings.Year, day))
+            if (_cache.HasDescription(year, day))
             {
                 Debug.Log("Got Desc from Cache for day " + day);
-                return _cache.GetDescription(_settings.Year, day);
+                return _cache.GetDescription(year, day);
             }
 
-            var uri = $"https://adventofcode.com/{_settings.Year}/day/{day}";
+            var uri = $"https://adventofcode.com/{year}/day/{day}";
             using var www = UnityWebRequest.Get(uri);
             www.SetRequestHeader("Cookie", $"session={_settings.Session}");
             var operation = www.SendWebRequest();
@@ -91,24 +80,18 @@ namespace JTuresson.AdventOfCode.AOCClient
                 case UnityWebRequest.Result.DataProcessingError:
                     return await Task.FromResult(string.Empty);
                 case UnityWebRequest.Result.Success:
-                    _cache.AddDescription(_settings.Year, day, b.InnerText);
+                    _cache.AddDescription(year, day, b.InnerText);
                     return await Task.FromResult(b.InnerText);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-        }
+        }*/
 
-        public async Task<string> LoadDayInput(int day)
+        public async Task<string> LoadDayInput(string session, int year, int day)
         {
-            if (_cache.HasInput(_settings.Year, day))
-            {
-                Debug.Log("Got Input from Cache for day " + day);
-                return _cache.GetInput(_settings.Year, day);
-            }
-
-            var uri = $"https://adventofcode.com/{_settings.Year}/day/{day}/input";
+            var uri = $"https://adventofcode.com/{year}/day/{day}/input";
             using var www = UnityWebRequest.Get(uri);
-            www.SetRequestHeader("Cookie", $"session={_settings.Session}");
+            www.SetRequestHeader("Cookie", $"session={session}");
             var operation = www.SendWebRequest();
             while (!operation.isDone)
                 await Task.Yield();
@@ -121,7 +104,6 @@ namespace JTuresson.AdventOfCode.AOCClient
                 case UnityWebRequest.Result.DataProcessingError:
                     return await Task.FromResult(string.Empty);
                 case UnityWebRequest.Result.Success:
-                    _cache.AddInput(_settings.Year, day, text);
                     return await Task.FromResult(text);
                 default:
                     throw new ArgumentOutOfRangeException();

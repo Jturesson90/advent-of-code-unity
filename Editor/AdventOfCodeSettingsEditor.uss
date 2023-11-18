@@ -26,6 +26,10 @@ propertylabel {
     flex-grow: 1;
 }
 
+#error-label {
+    color: darkred;
+}
+
 .advent-of-code-button {
     background-color: rgba(0, 0, 0, 0);
     border-width: 0;
@@ -34,6 +38,7 @@ propertylabel {
     color: rgb(0, 153, 0);
     font-size: var(--unity-metrics-default-font_very_big_size);
 }
+
 .advent-of-code-button:hover {
     color: rgb(153, 255, 153);
 }
