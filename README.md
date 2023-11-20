@@ -6,8 +6,9 @@ With this package, you can focus on solving Advent of Code puzzles without worry
 
 ## Installation
 
-To install the package, add the following line to your Unity project's `Packages/manifest.json` file under the `dependencies` section:
-
+To install the package, you can do it in two different ways. 
+### Manually add it to manifest.json
+Add the following line to your Unity project's `Packages/manifest.json` file under the `dependencies` section:
 ```json
 "dependencies": {
   "com.jturesson.adventofcode": "https://github.com/Jturesson90/advent-of-code-unity.git"
@@ -17,10 +18,18 @@ Here is one easy to copy
 ```
 "com.jturesson.adventofcode": "https://github.com/Jturesson90/advent-of-code-unity.git"
 ```
+### With Unity Package Manager
+
+
+Open up Package Manager, click the + in the top left, click `Add package from git URL...`. Enter this in the textfield
+```
+"https://github.com/Jturesson90/advent-of-code-unity.git"
+```
+and click `add`.
 
 ## Usage
 ### Get your session cookie Id.
-To download the inputs to Unity we need the session cookie from the homepage. This session id will be stored locally on your machine with [UnityEditor.EditorPrefs](https://docs.unity3d.com/ScriptReference/EditorPrefs.html). So it wont be a part of your commits to version control.
+To download the inputs to Unity we need the session cookie from the homepage. This session id will be stored locally on your machine with [UnityEditor.EditorPrefs](https://docs.unity3d.com/ScriptReference/EditorPrefs.html). So it wont be a part of your commits to version control. The session key will work for a really long time, so you wont need to change this until you log out on the homepage.
 
 - Go to https://adventofcode.com
 - Make sure you have logged in
