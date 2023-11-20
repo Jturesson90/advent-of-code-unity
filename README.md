@@ -13,6 +13,10 @@ To install the package, add the following line to your Unity project's `Packages
   "com.jturesson.adventofcode": "https://github.com/Jturesson90/advent-of-code-unity.git"
 }
 ```
+Here is one easy to copy
+```
+"com.jturesson.adventofcode": "https://github.com/Jturesson90/advent-of-code-unity.git"
+```
 
 ## Usage
 ### Get your session cookie Id.
