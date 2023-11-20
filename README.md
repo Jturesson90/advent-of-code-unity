@@ -23,7 +23,7 @@ Here is one easy to copy
 
 Open up Package Manager, click the + in the top left, click `Add package from git URL...`. Enter this in the textfield
 ```
-"https://github.com/Jturesson90/advent-of-code-unity.git"
+https://github.com/Jturesson90/advent-of-code-unity.git
 ```
 and click `add`.
 
