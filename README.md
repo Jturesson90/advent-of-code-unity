@@ -11,19 +11,19 @@ To install the package, you can do it in two different ways.
 Add the following line to your Unity project's `Packages/manifest.json` file under the `dependencies` section:
 ```json
 "dependencies": {
-  "com.jturesson.adventofcode": "https://github.com/Jturesson90/advent-of-code-unity.git"
+  "com.jturesson.adventofcode": "https://github.com/Jturesson90/advent-of-code-unity.git#v1.0.0"
 }
 ```
 Here is one easy to copy
 ```
-"com.jturesson.adventofcode": "https://github.com/Jturesson90/advent-of-code-unity.git"
+"com.jturesson.adventofcode": "https://github.com/Jturesson90/advent-of-code-unity.git#v1.0.0"
 ```
 ### With Unity Package Manager
 
 
 Open up Package Manager, click the + in the top left, click `Add package from git URL...`. Enter this in the textfield
 ```
-https://github.com/Jturesson90/advent-of-code-unity.git
+https://github.com/Jturesson90/advent-of-code-unity.git#v1.0.0
 ```
 and click `add`.
 
