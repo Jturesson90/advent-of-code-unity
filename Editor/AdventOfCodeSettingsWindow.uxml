@@ -6,8 +6,8 @@
         <ui:Button text="Login" display-tooltip-when-elided="true" name="login-button" class="advent-of-code-button" />
         <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="error-label" />
         <ui:VisualElement name="setup-container" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
-            <ui:DropdownField label="Dropdown" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="year-dropdown" />
-            <ui:DropdownField label="Dropdown" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="day-dropdown" />
+            <ui:DropdownField label="Year" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="year-dropdown" />
+            <ui:DropdownField label="Day" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="day-dropdown" />
             <ui:Button text="Get " display-tooltip-when-elided="true" tooltip="Get input and create classes" name="setup-button" class="advent-of-code-button" />
         </ui:VisualElement>
     </ui:VisualElement>

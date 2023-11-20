@@ -31,6 +31,7 @@ namespace JTuresson.AdventOfCode.Editor
             var setupContainer = rootVisualElement.Q<VisualElement>("setup-container");
 
             var yearDropdown = rootVisualElement.Q<DropdownField>("year-dropdown");
+        //    yearDropdown.label = "Year";
             var years = GetYears();
             var indexOfYear = years.IndexOf(selectedYear);
             yearDropdown.choices = years.Select(a => a.ToString()).ToList();
@@ -39,6 +40,7 @@ namespace JTuresson.AdventOfCode.Editor
 
             var days = GetDays();
             var dayDropdown = rootVisualElement.Q<DropdownField>("day-dropdown");
+//            yearDropdown.label = "Day";
             var indexOfDay = days.IndexOf(selectedDay);
             dayDropdown.choices = days.Select(a => a.ToString()).ToList();
             dayDropdown.index = indexOfDay;
@@ -93,7 +95,6 @@ namespace JTuresson.AdventOfCode.Editor
 
         private async void SetupDay(string session, int year, int day, Action<bool> action)
         {
-            var t = Resources.Load<TextAsset>($"AdventOfCode/{year}/{day}.asset");
             const string assetsFolder = "Assets";
             const string resourceFolder = "Resources";
             const string adventOfCodeFolder = "AdventOfCode";
@@ -115,10 +116,10 @@ namespace JTuresson.AdventOfCode.Editor
                     yearFolder)))
                 AssetDatabase.CreateFolder(Path.Combine(assetsFolder, resourceFolder, adventOfCodeFolder), yearFolder);
 
-            Debug.Log(input);
             var fullPath = Path.Combine(assetsFolder, resourceFolder, adventOfCodeFolder, yearFolder, dayFileName);
             await File.WriteAllTextAsync(fullPath, input.Trim());
             AssetDatabase.Refresh();
+            CreateYear(year, day);
             action(true);
         }
 
@@ -149,46 +150,179 @@ namespace JTuresson.AdventOfCode.Editor
         public static void ShowExample()
         {
             var wnd = GetWindow<AdventOfCodeSettingsWindow>();
-            wnd.titleContent = new GUIContent("Advent of Code Settings Window");
+            wnd.titleContent = new GUIContent("Advent of Code Settings");
         }
 
-        public static void CreateYear(string yearDropdownValue)
+        public static void CreateYear(int yearDropdownValue, int day)
         {
-            if (!AssetDatabase.IsValidFolder("Assets" + "/" + yearDropdownValue))
+            var assetsFolder = Path.Combine("Assets");
+            var aocFolder = Path.Combine(assetsFolder, "AdventOfCode");
+            var yearFolder = Path.Combine(aocFolder, yearDropdownValue.ToString());
+            var codeFolder = Path.Combine(yearFolder, "Code");
+            var testsFolder = Path.Combine(yearFolder, "Tests");
+            var dayFile = Path.Combine(codeFolder, $"Day{day}.cs");
+            var dayTestFile = Path.Combine(testsFolder, $"Day{day}Tests.cs");
+
+            var a = AssetDatabase.LoadAssetAtPath<TextAsset>(dayFile);
+            if (a != null)
             {
-                AssetDatabase.CreateFolder("Assets/AdventOfCode", yearDropdownValue);
-                var yearPath = "Assets/AdventOfCode/" + yearDropdownValue;
-                AssetDatabase.CreateFolder(yearPath, "Code");
-                AssetDatabase.CreateFolder(yearPath, "Inputs");
-                AssetDatabase.CreateFolder(yearPath, "Tests");
-                var codeFolderPath = "Assets/AdventOfCode/" + yearDropdownValue + "/Code";
-                for (var i = 1; i <= 25; i++)
-                {
-                    var name = $"Day{i}";
-                    var fileName = $"{name}.cs";
-                    var outfile = codeFolderPath + "/" + fileName;
-                    using var sw = new StreamWriter(outfile, false);
-                    var s =
-                        "namespace AdventOfCode" + yearDropdownValue +
-                        "\n{" +
-                        "\n\tpublic class " + name +
-                        "\n\t{" +
-                        "\n\t\tpublic string PuzzleA(string input)" +
-                        "\n\t\t{" +
-                        "\n\t\t\t return input;" +
-                        "\n\t\t}" +
-                        "\n\t\tpublic string PuzzleB(string input)" +
-                        "\n\t\t{" +
-                        "\n\t\t\t return input;" +
-                        "\n\t\t}" +
-                        "\n\t}" +
-                        "\n}";
+                Debug.Log($"{dayFile} already exists. No need of creating new one");
+                return;
+            }
 
-                    sw.Write(s);
-                }
+            if (!AssetDatabase.IsValidFolder(aocFolder))
+            {
+                Debug.Log("Creating " + aocFolder);
+                AssetDatabase.CreateFolder(assetsFolder, "AdventOfCode");
+            }
 
+            if (!AssetDatabase.IsValidFolder(yearFolder))
+            {
+                Debug.Log("Creating " + yearFolder);
+                AssetDatabase.CreateFolder(aocFolder, yearDropdownValue.ToString());
+            }
+
+            if (!AssetDatabase.IsValidFolder(codeFolder))
+            {
+                Debug.Log("Create " + codeFolder);
+                // Create asmdef
+                AssetDatabase.CreateFolder(yearFolder, "Code");
+                var asmdef = Path.Combine(codeFolder, $"AdventOfCode.{yearDropdownValue}.asmdef");
+                using var streamWriter = new StreamWriter(asmdef);
+                streamWriter.WriteLine("{");
+                streamWriter.WriteLine($"\t\"name\": \"AdventOfCode.{yearDropdownValue}\",");
+                streamWriter.WriteLine("\t\"references\": [");
+                streamWriter.WriteLine("\t\t\"JTuresson.AdventOfCode\"");
+                streamWriter.WriteLine("\t]");
+
+                streamWriter.WriteLine("}");
+                streamWriter.Close();
+                AssetDatabase.Refresh();
+/*
+ * {
+        "name": "NewAssembly"
+    }
+
+ */
+            }
+
+            if (!AssetDatabase.IsValidFolder(testsFolder))
+            {
+                Debug.Log("Create " + testsFolder);
+                // Create asmdef
+                AssetDatabase.CreateFolder(yearFolder, "Tests");
+                var asmdef = Path.Combine(testsFolder, $"AdventOfCode.{yearDropdownValue}.Tests.asmdef");
+                using var streamWriter = new StreamWriter(asmdef);
+                streamWriter.WriteLine("{");
+                streamWriter.WriteLine($"\t\"name\": \"AdventOfCode.{yearDropdownValue}.Tests\",");
+
+                streamWriter.WriteLine("\t\"references\": [");
+                streamWriter.WriteLine($"\t\t\"AdventOfCode.{yearDropdownValue}\"");
+                streamWriter.WriteLine("\t],");
+
+                streamWriter.WriteLine("\t\"optionalUnityReferences\": [");
+                streamWriter.WriteLine("\t\t\"TestAssemblies\"");
+                streamWriter.WriteLine("\t],");
+                streamWriter.WriteLine("\t\"includePlatforms\": [");
+                streamWriter.WriteLine("\t\t\"Editor\"");
+                streamWriter.WriteLine("\t]");
+                streamWriter.WriteLine("}");
                 AssetDatabase.Refresh();
             }
+
+            if (AssetDatabase.LoadAssetAtPath<TextAsset>(dayFile) == null)
+            {
+                using var streamWriter = new StreamWriter(dayFile);
+                streamWriter.WriteLine("using JTuresson.AdventOfCode;");
+                streamWriter.WriteLine();
+                streamWriter.WriteLine($"namespace AdventOfCode_{yearDropdownValue}");
+                streamWriter.WriteLine("{");
+                streamWriter.WriteLine($"\tpublic static class Day{day}");
+                streamWriter.WriteLine("\t{");
+                streamWriter.WriteLine("\t\tpublic static string PuzzleA(string input)");
+                streamWriter.WriteLine("\t\t{");
+                streamWriter.WriteLine("\t\t\t//Solve puzzle A!");
+                streamWriter.WriteLine("\t\t\treturn input;");
+                streamWriter.WriteLine("\t\t}");
+                streamWriter.WriteLine("\t\tpublic static string PuzzleB(string input)");
+                streamWriter.WriteLine("\t\t{");
+                streamWriter.WriteLine("\t\t\t//Solve puzzle B!");
+                streamWriter.WriteLine("\t\t\treturn input;");
+                streamWriter.WriteLine("\t\t}");
+                streamWriter.WriteLine("\t}");
+                streamWriter.WriteLine("}");
+                AssetDatabase.Refresh();
+            }
+
+            if (AssetDatabase.LoadAssetAtPath<TextAsset>(dayTestFile) == null)
+            {
+                using var streamWriter = new StreamWriter(dayTestFile);
+                streamWriter.WriteLine("using System;");
+                streamWriter.WriteLine("using System.Collections;");
+                streamWriter.WriteLine("using System.Collections.Generic;");
+                streamWriter.WriteLine("using NUnit.Framework;");
+                streamWriter.WriteLine("using UnityEngine;");
+                streamWriter.WriteLine("using UnityEngine.TestTools;");
+                streamWriter.WriteLine($"using AdventOfCode_{yearDropdownValue};");
+                streamWriter.WriteLine("");
+                streamWriter.WriteLine($"namespace AdventOfCode_{yearDropdownValue}Tests");
+                streamWriter.WriteLine("{");
+                streamWriter.WriteLine("\t[TestFixture]");
+                streamWriter.WriteLine($"\tpublic class Day{day}Tests");
+                streamWriter.WriteLine("\t{");
+                streamWriter.WriteLine("\t\tprivate string _input;");
+                streamWriter.WriteLine("");
+                streamWriter.WriteLine("\t\t[SetUp]");
+                streamWriter.WriteLine("\t\tpublic void Setup()");
+                streamWriter.WriteLine("\t\t{");
+                streamWriter.WriteLine(
+                    $"\t\t\t_input = Resources.Load<TextAsset>(\"AdventOfCode/{yearDropdownValue}/{day}\").text;");
+                streamWriter.WriteLine("\t\t}");
+                streamWriter.WriteLine("");
+                streamWriter.WriteLine("\t\t[Test]");
+                streamWriter.WriteLine("\t\tpublic void PuzzleATests()");
+                streamWriter.WriteLine("\t\t{");
+                streamWriter.WriteLine($"\t\t\tvar result = Day{day}.PuzzleA(_input);");
+                streamWriter.WriteLine("\t\t\tAssert.AreEqual(\"expected result\", result);");
+                streamWriter.WriteLine("\t\t}");
+                streamWriter.WriteLine("");
+                streamWriter.WriteLine("\t\t[Test]");
+                streamWriter.WriteLine("\t\tpublic void PuzzleBTests()");
+                streamWriter.WriteLine("\t\t{");
+                streamWriter.WriteLine($"\t\t\tvar result = Day{day}.PuzzleB(_input);");
+                streamWriter.WriteLine("\t\t\tAssert.AreEqual(\"expected result\", result);");
+                streamWriter.WriteLine("\t\t}");
+                streamWriter.WriteLine("\t}");
+                streamWriter.WriteLine("}");
+                AssetDatabase.Refresh();
+            }
+/*
+ * using System.Collections;
+using System.Collections.Generic;
+using NUnit.Framework;
+using UnityEngine;
+using UnityEngine.TestTools;
+
+public class NewTestScript
+{
+    // A Test behaves as an ordinary method
+    [Test]
+    public void NewTestScriptSimplePasses()
+    {
+        // Use the Assert class to test conditions
+    }
+
+    // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
+    // `yield return null;` to skip a frame.
+    [UnityTest]
+    public IEnumerator NewTestScriptWithEnumeratorPasses()
+    {
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
+    }
+}
+ */
         }
     }
 }
