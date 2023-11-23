@@ -40,7 +40,6 @@ namespace JTuresson.AdventOfCode.Editor
             var isLoggedIn = EditorPrefs.GetString(SessionEditorPrefsKey, string.Empty) != string.Empty;
             rootVisualElement.Clear();
             visualTreeAsset.CloneTree(rootVisualElement);
-
             var setupContainer = rootVisualElement.Q<VisualElement>("setup-container");
 
             var yearDropdown = rootVisualElement.Q<DropdownField>("year-dropdown");
@@ -71,12 +70,14 @@ namespace JTuresson.AdventOfCode.Editor
             sessionTextField.value = EditorPrefs.GetString(SessionEditorPrefsKey, string.Empty);
             var loginButton = rootVisualElement.Q<Button>("login-button");
             loginButton.text = isLoggedIn ? "Log out" : "Log in";
+
             loginButton.clickable.clicked += () =>
             {
                 if (errorLabel.text == "Loading...") return;
                 if (isLoggedIn)
                 {
                     loginButton.text = "Log in";
+                    errorLabel.text = "";
                     isLoggedIn = false;
                     EditorPrefs.DeleteKey(SessionEditorPrefsKey);
                     setupContainer.SetEnabled(isLoggedIn);

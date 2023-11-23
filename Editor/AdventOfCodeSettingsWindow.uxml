@@ -3,18 +3,18 @@
          noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True"
          schemaLocation="UnityEngine.UIElements ">
     <Style src="project://database/Packages/com.jturesson.adventofcode/Editor/AdventOfCodeSettingsWindow.uss?fileID=7433441132597879392&amp;guid=e096bc1acf0860c4bbf9faea27e43701&amp;type=3#AdventOfCodeSettingsWindow"/>
-    <ui:VisualElement name="body" style="flex-grow: 1;">
+    <ui:VisualElement name="body">
         <ui:Label tabindex="-1" text="Advent of Code" display-tooltip-when-elided="true" name="Label"
                   class="advent-of-code-h1"/>
         <ui:TextField picking-mode="Ignore" label="Session" value="filler text" password="true" is-delayed="true"
-                      name="session-textfield" />
+                      name="session-textfield"/>
         <ui:Button text="Login" display-tooltip-when-elided="true" name="login-button" class="advent-of-code-button"/>
         <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="error-label"/>
-        <ui:VisualElement name="setup-container" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+        <ui:VisualElement name="setup-container">
             <ui:DropdownField label="Year" index="-1" choices="System.Collections.Generic.List`1[System.String]"
-                              name="year-dropdown" />
+                              name="year-dropdown"/>
             <ui:DropdownField label="Day" index="-1" choices="System.Collections.Generic.List`1[System.String]"
-                              name="day-dropdown" />
+                              name="day-dropdown"/>
             <ui:Button text="Submit" display-tooltip-when-elided="true" tooltip="Get input and create classes"
                        name="setup-button" class="advent-of-code-button"/>
         </ui:VisualElement>

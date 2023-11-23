@@ -1,7 +1,7 @@
 #body {
     padding: 8px;
-    -unity-font: resource('SourceCodePro-Regular');
     background-color: rgb(15, 15, 35);
+    flex-grow: 1;
 }
 
 #error-label {
@@ -15,33 +15,24 @@
     text-shadow: 0 0 5px rgb(0, 204, 0);
     font-size: var(--unity-metrics-default-font_very_big_size);
     -unity-text-align: middle-center;
-    -unity-font: initial;
 }
 
 .button:hover {
     color: rgb(153, 255, 153);
 }
 
-.buttons-container {
-    margin-top: 2px;
-    margin-bottom: 20px;
-    align-items: flex-end;
-    justify-content: center;
-}
-
 .advent-of-code-button {
     -unity-font: url('project://database/Packages/com.jturesson.adventofcode/Editor/Fonts/SourceCodePro-Regular.ttf?fileID=12800000&guid=2dfce3c62d108de438f6f8afc64e04d4&type=3#SourceCodePro-Regular');
     -unity-text-align: middle-center;
     -unity-font-style: bold;
-    -unity-font-definition: none;
     background-color: rgba(0, 0, 0, 0);
     border-width: 0;
     margin-bottom: 8px;
     margin-top: 4px;
-    
     padding: 0;
     color: rgb(0, 153, 0);
     font-size: var(--unity-metrics-default-font_very_big_size);
+    -unity-font-definition: url('project://database/Packages/com.jturesson.adventofcode/Editor/Fonts/SourceCodePro-Regular%20SDF%201.asset?fileID=11400000&guid=b6a4f2a0eefe8c249adcb3eac1a0ca6d&type=2#SourceCodePro-Regular SDF 1');
 }
 
 .advent-of-code-button:hover {
@@ -51,5 +42,5 @@
 .unity-label {
     -unity-font: url('project://database/Packages/com.jturesson.adventofcode/Editor/Fonts/SourceCodePro-Regular.ttf?fileID=12800000&guid=2dfce3c62d108de438f6f8afc64e04d4&type=3#SourceCodePro-Regular');
     -unity-font-style: bold;
-    -unity-font-definition: none;
+    -unity-font-definition: url('project://database/Packages/com.jturesson.adventofcode/Editor/Fonts/SourceCodePro-Regular%20SDF%201.asset?fileID=11400000&guid=b6a4f2a0eefe8c249adcb3eac1a0ca6d&type=2#SourceCodePro-Regular SDF 1');
 }
