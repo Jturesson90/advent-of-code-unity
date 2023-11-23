@@ -4,23 +4,18 @@
     background-color: rgb(15, 15, 35);
 }
 
+#error-label {
+    color: darkred;
+    margin-bottom: 8px;
+    -unity-text-align: middle-center;
+}
+
 .advent-of-code-h1 {
     color: rgb(0, 204, 0);
     text-shadow: 0 0 5px rgb(0, 204, 0);
-    -unity-font: url('project://database/Library/unity%20default%20resources?fileID=10102&guid=0000000000000000e000000000000000&type=0#Arial');
     font-size: var(--unity-metrics-default-font_very_big_size);
     -unity-text-align: middle-center;
-    -unity-font-style: normal;
-    -unity-font-definition: none;
-}
-
-* {
-    -unity-font: url('project://database/Assets/SourceCodePro-Regular.ttf?fileID=12800000&guid=9eeb73ba01eccb04abd53679c96327a3&type=3#SourceCodePro-Regular');
-}
-
-propertylabel {
-    -unity-font-style: bold;
-    color: rgb(68, 138, 255);
+    -unity-font: initial;
 }
 
 .button:hover {
@@ -34,27 +29,27 @@ propertylabel {
     justify-content: center;
 }
 
-#Year {
-    flex-grow: 1;
-}
-
-#SessionId {
-    flex-grow: 1;
-}
-
 .advent-of-code-button {
+    -unity-font: url('project://database/Packages/com.jturesson.adventofcode/Editor/Fonts/SourceCodePro-Regular.ttf?fileID=12800000&guid=2dfce3c62d108de438f6f8afc64e04d4&type=3#SourceCodePro-Regular');
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
+    -unity-font-definition: none;
     background-color: rgba(0, 0, 0, 0);
     border-width: 0;
-    margin: 0;
+    margin-bottom: 8px;
+    margin-top: 4px;
+    
     padding: 0;
     color: rgb(0, 153, 0);
     font-size: var(--unity-metrics-default-font_very_big_size);
 }
+
 .advent-of-code-button:hover {
     color: rgb(153, 255, 153);
 }
 
-#ClearCacheContainer {
-    justify-content: center;
-    align-items: flex-end;
+.unity-label {
+    -unity-font: url('project://database/Packages/com.jturesson.adventofcode/Editor/Fonts/SourceCodePro-Regular.ttf?fileID=12800000&guid=2dfce3c62d108de438f6f8afc64e04d4&type=3#SourceCodePro-Regular');
+    -unity-font-style: bold;
+    -unity-font-definition: none;
 }
