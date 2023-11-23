@@ -12,10 +12,23 @@ namespace JTuresson.AdventOfCode.Editor
     public class AdventOfCodeSettingsWindow : EditorWindow
     {
         private const string SessionEditorPrefsKey = "session-editor-prefs-key";
+        private const string SelectedYearEditorPrefsKey = "selected-year-editor-prefs-key";
+        private const string SelectedDayEditorPrefsKey = "selected-day-editor-prefs-key";
         [SerializeField] private VisualTreeAsset visualTreeAsset;
-        [SerializeField] private int selectedYear = -1;
-        [SerializeField] private int selectedDay = -1;
+
         private AdventOfCodeClient _adventOfCodeClient;
+
+        private static int SelectedYear
+        {
+            get => EditorPrefs.GetInt(SelectedYearEditorPrefsKey, -1);
+            set => EditorPrefs.SetInt(SelectedYearEditorPrefsKey, value);
+        }
+
+        private static int SelectedDay
+        {
+            get => EditorPrefs.GetInt(SelectedDayEditorPrefsKey, -1);
+            set => EditorPrefs.SetInt(SelectedDayEditorPrefsKey, value);
+        }
 
         private void OnEnable()
         {
@@ -31,25 +44,23 @@ namespace JTuresson.AdventOfCode.Editor
             var setupContainer = rootVisualElement.Q<VisualElement>("setup-container");
 
             var yearDropdown = rootVisualElement.Q<DropdownField>("year-dropdown");
-        //    yearDropdown.label = "Year";
             var years = GetYears();
-            var indexOfYear = years.IndexOf(selectedYear);
+            var indexOfYear = years.IndexOf(SelectedYear);
             yearDropdown.choices = years.Select(a => a.ToString()).ToList();
             yearDropdown.index = indexOfYear;
-            yearDropdown.RegisterCallback<ChangeEvent<string>>(evt => { selectedYear = int.Parse(evt.newValue); });
+            yearDropdown.RegisterCallback<ChangeEvent<string>>(evt => { SelectedYear = int.Parse(evt.newValue); });
 
             var days = GetDays();
             var dayDropdown = rootVisualElement.Q<DropdownField>("day-dropdown");
-//            yearDropdown.label = "Day";
-            var indexOfDay = days.IndexOf(selectedDay);
+            var indexOfDay = days.IndexOf(SelectedDay);
             dayDropdown.choices = days.Select(a => a.ToString()).ToList();
             dayDropdown.index = indexOfDay;
-            dayDropdown.RegisterCallback<ChangeEvent<string>>(evt => { selectedDay = int.Parse(evt.newValue); });
+            dayDropdown.RegisterCallback<ChangeEvent<string>>(evt => { SelectedDay = int.Parse(evt.newValue); });
 
             var button = rootVisualElement.Q<Button>("setup-button");
             button.clickable.clicked += () =>
             {
-                SetupDay(EditorPrefs.GetString(SessionEditorPrefsKey, string.Empty), selectedYear, selectedDay,
+                SetupDay(EditorPrefs.GetString(SessionEditorPrefsKey, string.Empty), SelectedYear, SelectedDay,
                     b => { });
             };
 
@@ -198,12 +209,6 @@ namespace JTuresson.AdventOfCode.Editor
                 streamWriter.WriteLine("}");
                 streamWriter.Close();
                 AssetDatabase.Refresh();
-/*
- * {
-        "name": "NewAssembly"
-    }
-
- */
             }
 
             if (!AssetDatabase.IsValidFolder(testsFolder))
@@ -296,33 +301,6 @@ namespace JTuresson.AdventOfCode.Editor
                 streamWriter.WriteLine("}");
                 AssetDatabase.Refresh();
             }
-/*
- * using System.Collections;
-using System.Collections.Generic;
-using NUnit.Framework;
-using UnityEngine;
-using UnityEngine.TestTools;
-
-public class NewTestScript
-{
-    // A Test behaves as an ordinary method
-    [Test]
-    public void NewTestScriptSimplePasses()
-    {
-        // Use the Assert class to test conditions
-    }
-
-    // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
-    // `yield return null;` to skip a frame.
-    [UnityTest]
-    public IEnumerator NewTestScriptWithEnumeratorPasses()
-    {
-        // Use the Assert class to test conditions.
-        // Use yield to skip a frame.
-        yield return null;
-    }
-}
- */
         }
     }
 }
