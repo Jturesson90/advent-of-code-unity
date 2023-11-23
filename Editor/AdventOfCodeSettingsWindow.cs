@@ -165,15 +165,17 @@ namespace JTuresson.AdventOfCode.Editor
             wnd.titleContent = new GUIContent("Advent of Code Settings");
         }
 
-        public static void CreateYear(int yearDropdownValue, int day)
+        public static void CreateYear(int yearDropdownValue2, int day2)
         {
+            var yearString = yearDropdownValue2.ToString();
+            var dayString = day2.ToString().PadLeft(2, '0');
             var assetsFolder = Path.Combine("Assets");
             var aocFolder = Path.Combine(assetsFolder, "AdventOfCode");
-            var yearFolder = Path.Combine(aocFolder, yearDropdownValue.ToString());
+            var yearFolder = Path.Combine(aocFolder, yearString);
             var codeFolder = Path.Combine(yearFolder, "Code");
             var testsFolder = Path.Combine(yearFolder, "Tests");
-            var dayFile = Path.Combine(codeFolder, $"Day{day}.cs");
-            var dayTestFile = Path.Combine(testsFolder, $"Day{day}Tests.cs");
+            var dayFile = Path.Combine(codeFolder, $"Day{dayString}.cs");
+            var dayTestFile = Path.Combine(testsFolder, $"Day{dayString}Tests.cs");
 
             var a = AssetDatabase.LoadAssetAtPath<TextAsset>(dayFile);
             if (a != null)
@@ -191,7 +193,7 @@ namespace JTuresson.AdventOfCode.Editor
             if (!AssetDatabase.IsValidFolder(yearFolder))
             {
                 Debug.Log("Creating " + yearFolder);
-                AssetDatabase.CreateFolder(aocFolder, yearDropdownValue.ToString());
+                AssetDatabase.CreateFolder(aocFolder, yearString);
             }
 
             if (!AssetDatabase.IsValidFolder(codeFolder))
@@ -199,10 +201,10 @@ namespace JTuresson.AdventOfCode.Editor
                 Debug.Log("Create " + codeFolder);
                 // Create asmdef
                 AssetDatabase.CreateFolder(yearFolder, "Code");
-                var asmdef = Path.Combine(codeFolder, $"AdventOfCode.{yearDropdownValue}.asmdef");
+                var asmdef = Path.Combine(codeFolder, $"AdventOfCode.{yearString}.asmdef");
                 using var streamWriter = new StreamWriter(asmdef);
                 streamWriter.WriteLine("{");
-                streamWriter.WriteLine($"\t\"name\": \"AdventOfCode.{yearDropdownValue}\",");
+                streamWriter.WriteLine($"\t\"name\": \"AdventOfCode.{yearString}\",");
                 streamWriter.WriteLine("\t\"references\": [");
                 streamWriter.WriteLine("\t\t\"JTuresson.AdventOfCode\"");
                 streamWriter.WriteLine("\t]");
@@ -217,13 +219,13 @@ namespace JTuresson.AdventOfCode.Editor
                 Debug.Log("Create " + testsFolder);
                 // Create asmdef
                 AssetDatabase.CreateFolder(yearFolder, "Tests");
-                var asmdef = Path.Combine(testsFolder, $"AdventOfCode.{yearDropdownValue}.Tests.asmdef");
+                var asmdef = Path.Combine(testsFolder, $"AdventOfCode.{yearString}.Tests.asmdef");
                 using var streamWriter = new StreamWriter(asmdef);
                 streamWriter.WriteLine("{");
-                streamWriter.WriteLine($"\t\"name\": \"AdventOfCode.{yearDropdownValue}.Tests\",");
+                streamWriter.WriteLine($"\t\"name\": \"AdventOfCode.{yearString}.Tests\",");
 
                 streamWriter.WriteLine("\t\"references\": [");
-                streamWriter.WriteLine($"\t\t\"AdventOfCode.{yearDropdownValue}\"");
+                streamWriter.WriteLine($"\t\t\"AdventOfCode.{yearString}\"");
                 streamWriter.WriteLine("\t],");
 
                 streamWriter.WriteLine("\t\"optionalUnityReferences\": [");
@@ -241,9 +243,9 @@ namespace JTuresson.AdventOfCode.Editor
                 using var streamWriter = new StreamWriter(dayFile);
                 streamWriter.WriteLine("using JTuresson.AdventOfCode;");
                 streamWriter.WriteLine();
-                streamWriter.WriteLine($"namespace AdventOfCode_{yearDropdownValue}");
+                streamWriter.WriteLine($"namespace AdventOfCode_{yearString}");
                 streamWriter.WriteLine("{");
-                streamWriter.WriteLine($"\tpublic static class Day{day}");
+                streamWriter.WriteLine($"\tpublic static class Day{dayString}");
                 streamWriter.WriteLine("\t{");
                 streamWriter.WriteLine("\t\tpublic static string PuzzleA(string input)");
                 streamWriter.WriteLine("\t\t{");
@@ -269,12 +271,12 @@ namespace JTuresson.AdventOfCode.Editor
                 streamWriter.WriteLine("using NUnit.Framework;");
                 streamWriter.WriteLine("using UnityEngine;");
                 streamWriter.WriteLine("using UnityEngine.TestTools;");
-                streamWriter.WriteLine($"using AdventOfCode_{yearDropdownValue};");
+                streamWriter.WriteLine($"using AdventOfCode_{yearString};");
                 streamWriter.WriteLine("");
-                streamWriter.WriteLine($"namespace AdventOfCode_{yearDropdownValue}Tests");
+                streamWriter.WriteLine($"namespace AdventOfCode_{yearString}Tests");
                 streamWriter.WriteLine("{");
                 streamWriter.WriteLine("\t[TestFixture]");
-                streamWriter.WriteLine($"\tpublic class Day{day}Tests");
+                streamWriter.WriteLine($"\tpublic class Day{dayString}Tests");
                 streamWriter.WriteLine("\t{");
                 streamWriter.WriteLine("\t\tprivate string _input;");
                 streamWriter.WriteLine("");
@@ -282,20 +284,20 @@ namespace JTuresson.AdventOfCode.Editor
                 streamWriter.WriteLine("\t\tpublic void Setup()");
                 streamWriter.WriteLine("\t\t{");
                 streamWriter.WriteLine(
-                    $"\t\t\t_input = Resources.Load<TextAsset>(\"AdventOfCode/{yearDropdownValue}/{day}\").text;");
+                    $"\t\t\t_input = Resources.Load<TextAsset>(\"AdventOfCode/{yearString}/{dayString}\").text;");
                 streamWriter.WriteLine("\t\t}");
                 streamWriter.WriteLine("");
                 streamWriter.WriteLine("\t\t[Test]");
                 streamWriter.WriteLine("\t\tpublic void PuzzleATests()");
                 streamWriter.WriteLine("\t\t{");
-                streamWriter.WriteLine($"\t\t\tvar result = Day{day}.PuzzleA(_input);");
+                streamWriter.WriteLine($"\t\t\tvar result = Day{dayString}.PuzzleA(_input);");
                 streamWriter.WriteLine("\t\t\tAssert.AreEqual(\"expected result\", result);");
                 streamWriter.WriteLine("\t\t}");
                 streamWriter.WriteLine("");
                 streamWriter.WriteLine("\t\t[Test]");
                 streamWriter.WriteLine("\t\tpublic void PuzzleBTests()");
                 streamWriter.WriteLine("\t\t{");
-                streamWriter.WriteLine($"\t\t\tvar result = Day{day}.PuzzleB(_input);");
+                streamWriter.WriteLine($"\t\t\tvar result = Day{dayString}.PuzzleB(_input);");
                 streamWriter.WriteLine("\t\t\tAssert.AreEqual(\"expected result\", result);");
                 streamWriter.WriteLine("\t\t}");
                 streamWriter.WriteLine("\t}");
