@@ -37,21 +37,21 @@ namespace JTuresson.AdventOfCode.Editor
 
         public void CreateGUI()
         {
-            var isLoggedIn = EditorPrefs.GetString(SessionEditorPrefsKey, string.Empty) != string.Empty;
+            bool isLoggedIn = EditorPrefs.GetString(SessionEditorPrefsKey, string.Empty) != string.Empty;
             rootVisualElement.Clear();
             visualTreeAsset.CloneTree(rootVisualElement);
             var setupContainer = rootVisualElement.Q<VisualElement>("setup-container");
 
             var yearDropdown = rootVisualElement.Q<DropdownField>("year-dropdown");
             var years = GetYears();
-            var indexOfYear = years.IndexOf(SelectedYear);
+            int indexOfYear = years.IndexOf(SelectedYear);
             yearDropdown.choices = years.Select(a => a.ToString()).ToList();
             yearDropdown.index = indexOfYear;
             yearDropdown.RegisterCallback<ChangeEvent<string>>(evt => { SelectedYear = int.Parse(evt.newValue); });
 
             var days = GetDays();
             var dayDropdown = rootVisualElement.Q<DropdownField>("day-dropdown");
-            var indexOfDay = days.IndexOf(SelectedDay);
+            int indexOfDay = days.IndexOf(SelectedDay);
             dayDropdown.choices = days.Select(a => a.ToString()).ToList();
             dayDropdown.index = indexOfDay;
             dayDropdown.RegisterCallback<ChangeEvent<string>>(evt => { SelectedDay = int.Parse(evt.newValue); });
@@ -85,7 +85,7 @@ namespace JTuresson.AdventOfCode.Editor
                 else
                 {
                     errorLabel.text = "Loading";
-                    var textfieldValue = sessionTextField.value;
+                    string textfieldValue = sessionTextField.value;
                     SessionOk(sessionTextField.value, b =>
                     {
                         if (b)
@@ -111,13 +111,13 @@ namespace JTuresson.AdventOfCode.Editor
             const string resourceFolder = "Resources";
             const string adventOfCodeFolder = "AdventOfCode";
             var yearFolder = $"{year}";
-            var dayFileName = $"{day}.txt";
+            var dayFileName = $"{day.ToString().PadLeft(2, '0')}.txt";
             if (!AssetDatabase.IsValidFolder(Path.Combine(assetsFolder, resourceFolder)))
                 AssetDatabase.CreateFolder("Assets", resourceFolder);
 
             if (!AssetDatabase.IsValidFolder(Path.Combine(assetsFolder, resourceFolder, adventOfCodeFolder)))
                 AssetDatabase.CreateFolder(Path.Combine(assetsFolder, resourceFolder), adventOfCodeFolder);
-            var input = await _adventOfCodeClient.LoadDayInput(session, year, day);
+            string input = await _adventOfCodeClient.LoadDayInput(session, year, day);
             if (string.IsNullOrEmpty(input))
             {
                 action(false);
@@ -128,7 +128,7 @@ namespace JTuresson.AdventOfCode.Editor
                     yearFolder)))
                 AssetDatabase.CreateFolder(Path.Combine(assetsFolder, resourceFolder, adventOfCodeFolder), yearFolder);
 
-            var fullPath = Path.Combine(assetsFolder, resourceFolder, adventOfCodeFolder, yearFolder, dayFileName);
+            string fullPath = Path.Combine(assetsFolder, resourceFolder, adventOfCodeFolder, yearFolder, dayFileName);
             await File.WriteAllTextAsync(fullPath, input.Trim());
             AssetDatabase.Refresh();
             CreateYear(year, day);
@@ -145,16 +145,16 @@ namespace JTuresson.AdventOfCode.Editor
 
         private static List<int> GetYears()
         {
-            var currentYear = DateTime.Now.Year;
+            int currentYear = DateTime.Now.Year;
             var years = new List<int>();
-            for (var year = currentYear; year >= 2015; year--) years.Add(year);
+            for (int year = currentYear; year >= 2015; year--) years.Add(year);
 
             return years;
         }
 
         private async void SessionOk(string session, Action<bool> callback)
         {
-            var b = await _adventOfCodeClient.SessionIsValid(session);
+            bool b = await _adventOfCodeClient.SessionIsValid(session);
             callback(b);
         }
 
@@ -168,14 +168,14 @@ namespace JTuresson.AdventOfCode.Editor
         public static void CreateYear(int yearDropdownValue2, int day2)
         {
             var yearString = yearDropdownValue2.ToString();
-            var dayString = day2.ToString().PadLeft(2, '0');
-            var assetsFolder = Path.Combine("Assets");
-            var aocFolder = Path.Combine(assetsFolder, "AdventOfCode");
-            var yearFolder = Path.Combine(aocFolder, yearString);
-            var codeFolder = Path.Combine(yearFolder, "Code");
-            var testsFolder = Path.Combine(yearFolder, "Tests");
-            var dayFile = Path.Combine(codeFolder, $"Day{dayString}.cs");
-            var dayTestFile = Path.Combine(testsFolder, $"Day{dayString}Tests.cs");
+            string dayString = day2.ToString().PadLeft(2, '0');
+            string assetsFolder = Path.Combine("Assets");
+            string aocFolder = Path.Combine(assetsFolder, "AdventOfCode");
+            string yearFolder = Path.Combine(aocFolder, yearString);
+            string codeFolder = Path.Combine(yearFolder, "Code");
+            string testsFolder = Path.Combine(yearFolder, "Tests");
+            string dayFile = Path.Combine(codeFolder, $"Day{dayString}.cs");
+            string dayTestFile = Path.Combine(testsFolder, $"Day{dayString}Tests.cs");
 
             var a = AssetDatabase.LoadAssetAtPath<TextAsset>(dayFile);
             if (a != null)
@@ -201,7 +201,7 @@ namespace JTuresson.AdventOfCode.Editor
                 Debug.Log("Create " + codeFolder);
                 // Create asmdef
                 AssetDatabase.CreateFolder(yearFolder, "Code");
-                var asmdef = Path.Combine(codeFolder, $"AdventOfCode.{yearString}.asmdef");
+                string asmdef = Path.Combine(codeFolder, $"AdventOfCode.{yearString}.asmdef");
                 using var streamWriter = new StreamWriter(asmdef);
                 streamWriter.WriteLine("{");
                 streamWriter.WriteLine($"\t\"name\": \"AdventOfCode.{yearString}\",");
@@ -219,7 +219,7 @@ namespace JTuresson.AdventOfCode.Editor
                 Debug.Log("Create " + testsFolder);
                 // Create asmdef
                 AssetDatabase.CreateFolder(yearFolder, "Tests");
-                var asmdef = Path.Combine(testsFolder, $"AdventOfCode.{yearString}.Tests.asmdef");
+                string asmdef = Path.Combine(testsFolder, $"AdventOfCode.{yearString}.Tests.asmdef");
                 using var streamWriter = new StreamWriter(asmdef);
                 streamWriter.WriteLine("{");
                 streamWriter.WriteLine($"\t\"name\": \"AdventOfCode.{yearString}.Tests\",");
